@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\oldprogrammer_authentication.domain\oldprogrammer_authentication.domain.csproj" />
+    <ProjectReference Include="..\oldprogrammer_authentication.services\oldprogrammer_authentication.services.csproj" />
+    <ProjectReference Include="..\oldprogrammer_authetication.core\oldprogrammer_authetication.core.csproj" />
   </ItemGroup>
 
 </Project>

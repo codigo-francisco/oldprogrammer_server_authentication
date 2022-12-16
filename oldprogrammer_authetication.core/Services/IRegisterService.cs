@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace oldprogrammer_authetication.core.Repositorios.Interfaces
+namespace oldprogrammer_authentication.services.Register
 {
-    public interface IRegistroRepositorio
+    public interface IRegisterService
     {
-        bool RegistrarUsuario(RegistroInput registroInput);
+        Task<bool> RegisterUser(RegisterInput registerInput);
     }
 }

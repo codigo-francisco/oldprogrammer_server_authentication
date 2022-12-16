@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\oldprogrammer_authetication.core\oldprogrammer_authetication.core.csproj" />
+  </ItemGroup>
+
 </Project>
