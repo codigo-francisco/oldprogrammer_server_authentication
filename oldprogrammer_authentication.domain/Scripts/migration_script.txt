@@ -1,0 +1,1 @@
+﻿dotnet ef migrations add InitialCreate --project oldprogrammer_authentication.domain --startup-project oldprogrammer_authentication
