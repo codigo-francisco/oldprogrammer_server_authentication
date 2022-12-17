@@ -1,4 +1,6 @@
+using oldprogrammer.authentication.httpclients.EmailClient;
 using oldprogrammer_authentication;
+using oldprogrammer_authetication.core.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace oldprogrammer_authetication.core.Domains
 {
-    public interface IAuthenticationUserRepository : IRepository<AuthenticationUser>
+    public interface IAuthenticationUserDomain : IRepository<AuthenticationUser>
     {
         DbContext GetContext();
     }

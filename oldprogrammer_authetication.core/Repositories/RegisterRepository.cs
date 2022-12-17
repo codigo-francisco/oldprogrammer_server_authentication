@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using oldprogrammer_authetication.core.DTO;
 using oldprogrammer_authetication.core.Exceptions;
+using oldprogrammer_authetication.core.HttpClients;
 using oldprogrammer_authetication.core.Inputs;
 using oldprogrammer_authetication.core.Models;
 using System;
@@ -15,14 +17,16 @@ namespace oldprogrammer_authetication.core.Repositories
     {
         private readonly UserManager<AuthenticationUser> _userManager;
         private readonly ILogger<RegisterRepository> _logger;
-
+        private readonly IEmailHttpClient _emailSystem;
         public RegisterRepository(
             UserManager<AuthenticationUser> userManager,
-            ILogger<RegisterRepository> logger
+            ILogger<RegisterRepository> logger,
+            IEmailHttpClient emailSystem
         ) 
         {
             _logger = logger;
             _userManager = userManager;
+            _emailSystem = emailSystem;
         }
         public async Task<bool> RegisterUser(RegisterInput registerInput)
         {
@@ -49,6 +53,13 @@ namespace oldprogrammer_authetication.core.Repositories
                 }
 
                 result = identityResult.Succeeded;
+
+                if (result)
+                {
+                    var tokenEmail = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                    var sendConfirmationEmail = new SendConfirmationEmail(registerInput.Email, tokenEmail);
+                    await _emailSystem.SendConfirmationEmail(sendConfirmationEmail);
+                }
             }
             else
             {

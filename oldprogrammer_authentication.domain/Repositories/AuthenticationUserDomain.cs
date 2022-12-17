@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace oldprogrammer_authentication.domain.Repositories
 {
-    public class AuthenticationUserRepository : RepositoryBase<AuthenticationUser, AuthenticationContext>, IAuthenticationUserRepository
+    public class AuthenticationUserDomain : RepositoryBase<AuthenticationUser, AuthenticationContext>, IAuthenticationUserDomain
     {
-        public AuthenticationUserRepository(AuthenticationContext _context) : base(_context)
+        public AuthenticationUserDomain(AuthenticationContext _context) : base(_context)
         {
         }
 
-        DbContext IAuthenticationUserRepository.GetContext()
+        DbContext IAuthenticationUserDomain.GetContext()
         {
             return Context;
         }

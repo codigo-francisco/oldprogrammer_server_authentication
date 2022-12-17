@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using oldprogrammer.authentication.httpclients.EmailClient;
 using oldprogrammer_authentication.domain.Base;
 using oldprogrammer_authentication.domain.Context;
 using oldprogrammer_authentication.domain.Repositories;
 using oldprogrammer_authentication.services.Register;
 using oldprogrammer_authetication.core.Domains;
+using oldprogrammer_authetication.core.HttpClients;
 using oldprogrammer_authetication.core.Models;
 using oldprogrammer_authetication.core.Repositories;
 
@@ -27,8 +29,10 @@ namespace oldprogrammer_authentication
             services.AddScoped<IRegisterRepository, RegisterRepository>();
 
             //Domains
-            services.AddScoped<IAuthenticationUserRepository, AuthenticationUserRepository>();
+            services.AddScoped<IAuthenticationUserDomain, AuthenticationUserDomain>();
 
+            //HttpClients
+            services.AddHttpClient<IEmailHttpClient, EmailHttpClient>();
         }
     }
 }
