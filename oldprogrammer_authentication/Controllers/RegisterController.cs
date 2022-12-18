@@ -16,7 +16,7 @@ namespace oldprogrammer_authentication.Controllers
             _logger = logger;
         }
         [HttpPost]
-        public async Task<IActionResult> RegisterNewUser(RegisterInput registerInput)
+        public async Task<IActionResult> RegisterNewUser([FromBody] RegisterInput registerInput)
         {
             _logger.LogInformation("System tries to create new user, userInput {RegisterInput}", registerInput);
             try

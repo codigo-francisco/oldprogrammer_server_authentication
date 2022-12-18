@@ -11,7 +11,11 @@ namespace oldprogrammer_authetication.core.Exceptions
         public GeneralExceptionReason GeneralReason { get; set; } = new GeneralExceptionReason { Code = GeneralExceptionCode.Unknown, MessageReason = String.Empty };
         public GeneralException(string message) : base(message)
         {
-
+            if (message == "InvalidUserName")
+            {
+                GeneralReason.Code = GeneralExceptionCode.InvalidUsername;
+                GeneralReason.MessageReason = message;
+            }
         }
         public GeneralException(string message, GeneralExceptionReason reason)
             : this(message)

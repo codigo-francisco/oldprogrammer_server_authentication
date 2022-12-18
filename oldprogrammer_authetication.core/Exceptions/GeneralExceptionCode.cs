@@ -9,6 +9,7 @@ namespace oldprogrammer_authetication.core.Exceptions
     public enum GeneralExceptionCode
     {
         Unknown = 0,
-        EmailExists = 1
+        EmailExists = 1,
+        InvalidUsername = 2,
     }
 }

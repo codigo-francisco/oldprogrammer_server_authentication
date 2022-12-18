@@ -15,14 +15,16 @@ using System.Threading.Tasks;
 
 namespace oldprogrammer.authentication.httpclients.EmailClient
 {
-    public class EmailHttpClient : HttpClient, IEmailHttpClient
+    public class EmailHttpClient : IEmailHttpClient
     {
         private readonly string _emailSendConfirmationEndPoint;
-        private ILogger<EmailHttpClient> _logger;
-        public EmailHttpClient(IConfiguration configuration, ILogger<EmailHttpClient> logger)
+        private readonly ILogger<EmailHttpClient> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
+        public EmailHttpClient(IConfiguration configuration, ILogger<EmailHttpClient> logger, IHttpClientFactory httpClientFactory)
         {
-            _emailSendConfirmationEndPoint = configuration.GetRequiredSection("Endpoints").GetRequiredSection("SendConfirmationEndPoint").Value;
+            _emailSendConfirmationEndPoint = configuration.GetRequiredSection("Endpoints").GetRequiredSection("EmailSystem")["SendConfirmationEndPoint"];
             _logger = logger;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task SendConfirmationEmail(SendConfirmationEmail sendConfirmationEmail)
@@ -31,9 +33,11 @@ namespace oldprogrammer.authentication.httpclients.EmailClient
             {
                 _logger.LogInformation("System Email will try to send an confirmation email for {Email}", sendConfirmationEmail.Email);
 
+                using var httpClient = _httpClientFactory.CreateClient();
+
                 var jsonContent = JsonContent.Create(sendConfirmationEmail);
 
-                var responseMessage = await PostAsync(_emailSendConfirmationEndPoint, jsonContent);
+                var responseMessage = await httpClient.PostAsync(_emailSendConfirmationEndPoint, jsonContent);
                 bool resultMessage = responseMessage.IsSuccessStatusCode;
 
                 if (resultMessage)

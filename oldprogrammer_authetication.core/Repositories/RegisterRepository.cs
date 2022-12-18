@@ -37,7 +37,8 @@ namespace oldprogrammer_authetication.core.Repositories
             {
                 var newUser = new AuthenticationUser
                 {
-                    Email = registerInput.Email
+                    Email = registerInput.Email,
+                    UserName = registerInput.Email
                 };
 
                 var identityResult = await _userManager.CreateAsync(newUser, registerInput.Password);
@@ -49,7 +50,7 @@ namespace oldprogrammer_authetication.core.Repositories
                         _logger.LogError("Error: Code: {Code}, Description: {Description}", error.Code, error.Description);
                     }
 
-                    throw new Exception("Errors detected when system tried to register new user, method: RegisterUser");
+                    throw new GeneralException(identityResult.Errors.First().Code);
                 }
 
                 result = identityResult.Succeeded;
