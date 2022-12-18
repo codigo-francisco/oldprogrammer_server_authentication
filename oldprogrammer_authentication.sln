@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oldprogrammer_authenticatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oldprogrammer_authetication.core", "oldprogrammer_authetication.core\oldprogrammer_authetication.core.csproj", "{00078A9A-264D-4170-A1F6-F6DFE579A8CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oldprogrammer.authentication.httpclients", "oldprogrammer.authentication.httpclients\oldprogrammer.authentication.httpclients.csproj", "{D810197E-9AB0-4892-B153-FC1B0319DC22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oldprogrammer.authentication.httpclients", "oldprogrammer.authentication.httpclients\oldprogrammer.authentication.httpclients.csproj", "{D810197E-9AB0-4892-B153-FC1B0319DC22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oldprogrammer.migrations.oldprogrammerdb", "..\oldprogrammer.migrations\oldprogrammer.migrations.oldprogrammerdb\oldprogrammer.migrations.oldprogrammerdb.csproj", "{22CEC688-3646-42AE-B54A-7A89BB43AFD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D810197E-9AB0-4892-B153-FC1B0319DC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D810197E-9AB0-4892-B153-FC1B0319DC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D810197E-9AB0-4892-B153-FC1B0319DC22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22CEC688-3646-42AE-B54A-7A89BB43AFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22CEC688-3646-42AE-B54A-7A89BB43AFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22CEC688-3646-42AE-B54A-7A89BB43AFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22CEC688-3646-42AE-B54A-7A89BB43AFD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using oldprogrammer.authentication.httpclients.EmailClient;
 using oldprogrammer_authentication.domain.Context;
-using oldprogrammer_authentication.Security;
 using oldprogrammer_authentication.services.Register;
 using oldprogrammer_authetication.core.HttpClients;
 using oldprogrammer_authetication.core.Models;
@@ -17,7 +16,8 @@ namespace oldprogrammer_authentication
         {
             services.AddDbContext<AuthenticationContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("OldProgrammerDB"));
+                options.UseSqlServer(configuration.GetConnectionString("OldProgrammerDB"),
+                    db => db.MigrationsAssembly("oldprogrammer.migrations.oldprogrammerdb"));
             }).AddIdentity<AuthenticationUser, IdentityRole>(setup =>
             {
                 setup.Password.RequiredLength = 8;
