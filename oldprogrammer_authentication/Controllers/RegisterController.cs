@@ -2,6 +2,7 @@
 using oldprogrammer_authentication.services.Register;
 using oldprogrammer_authetication.core.Exceptions;
 using oldprogrammer_authetication.core.Inputs;
+using oldprogrammer_authetication.core.Outputs;
 
 namespace oldprogrammer_authentication.Controllers
 {
@@ -19,35 +20,39 @@ namespace oldprogrammer_authentication.Controllers
         public async Task<IActionResult> RegisterNewUser([FromBody] RegisterInput registerInput)
         {
             _logger.LogInformation("System tries to create new user, userInput {RegisterInput}", registerInput);
+            var generalResponse = new GeneralResponse();
             try
             {
                 bool result = await _registerService.RegisterUser(registerInput);
 
                 if (result)
                 {
-                    return Created("api/register", 
-                    new 
-                    {
-                        registerInput.Email
-                    });
+                    generalResponse.StatusCode = 201;
+                    return Ok(generalResponse);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status304NotModified, $"Email: {registerInput.Email} was not registered");
+                    _logger.LogInformation("Email {Email} was not registered", registerInput.Email);
+
+                    generalResponse.Errors.Add(new GeneralExceptionResponse($"Email: {registerInput.Email} was not registered"));
+                    return Ok(generalResponse);
                 }
             }
             catch (GeneralException ex)
             {
                 _logger.LogError(ex, "Controller: RegisterController, Method: RegisterNewUser, CodeReadon: {Code}, Reason: {Reason}", 
-                    ex.GeneralReason.Code, ex.GeneralReason.MessageReason);
+                    ex.Code, ex.MessageReason);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error when it tried to create new user");
+                generalResponse.Errors.Add(ex.ToGeneralExceptionResponse());
+                generalResponse.StatusCode = 500;
+
+                return Ok(generalResponse);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Controller: RegisterController, Method: RegisterNewUser, Exception Message: {Message}", ex.Message);
+                generalResponse.Errors.Add(ex.ToGeneralExceptionResponse());
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error when it tried to create new user");
+                return Ok(generalResponse);
             }
         }
 

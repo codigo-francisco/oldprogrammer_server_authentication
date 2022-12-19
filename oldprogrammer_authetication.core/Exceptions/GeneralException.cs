@@ -2,30 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace oldprogrammer_authetication.core.Exceptions
 {
     public class GeneralException : Exception
     {
-        public GeneralExceptionReason GeneralReason { get; set; } = new GeneralExceptionReason { Code = GeneralExceptionCode.Unknown, MessageReason = String.Empty };
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public GeneralExceptionCode Code { get; set; }
+        public string MessageReason { get; set; }
         public GeneralException(string message) : base(message)
         {
             if (message == "InvalidUserName")
             {
-                GeneralReason.Code = GeneralExceptionCode.InvalidUsername;
-                GeneralReason.MessageReason = message;
+                Code = GeneralExceptionCode.InvalidUsername;
+                MessageReason = message;
             }
             else if (message == "UserNotFound")
             {
-                GeneralReason.Code = GeneralExceptionCode.UserNotFound;
-                GeneralReason.MessageReason = message;
+                Code = GeneralExceptionCode.UserNotFound;
+                MessageReason = message;
+            }
+            else
+            {
+                Code = GeneralExceptionCode.Unknown;
+                MessageReason = message;
             }
         }
-        public GeneralException(string message, GeneralExceptionReason reason)
+        public GeneralException(string message, GeneralExceptionCode code)
             : this(message)
         {
-            GeneralReason = reason;
+            Code = code;
         }
     }
 }

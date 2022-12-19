@@ -12,11 +12,8 @@ namespace oldprogrammer_authetication.core.Exceptions
         private const string EmailMessage = "Email Already Exists";
         public GeneralExceptionEmailExists() : base(EmailMessage)
         {
-            GeneralReason = new GeneralExceptionReason
-            {
-                Code = GeneralExceptionCode.EmailExists,
-                MessageReason = EmailMessage
-            };
+            Code = GeneralExceptionCode.EmailExists;
+            MessageReason = EmailMessage;
         }
     }
 }

@@ -12,11 +12,11 @@ namespace oldprogrammer_authentication
 {
     public static class Services
     {
-        public static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureContext(this WebApplicationBuilder builder)
         {
-            services.AddDbContext<AuthenticationContext>(options =>
+            builder.Services.AddDbContext<AuthenticationContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("OldProgrammerDB"),
+                options.UseSqlServer(builder.Configuration.GetConnectionString("OldProgrammerDB"),
                     db => db.MigrationsAssembly("oldprogrammer.migrations.oldprogrammerdb"));
             }).AddIdentity<AuthenticationUser, IdentityRole>(setup =>
             {
@@ -26,7 +26,7 @@ namespace oldprogrammer_authentication
             }).AddEntityFrameworkStores<AuthenticationContext>()
             .AddDefaultTokenProviders();
 
-            services.ConfigurationDependencies();
+            builder.Services.ConfigurationDependencies();
         }
         public static void ConfigurationDependencies(this IServiceCollection services)
         {
@@ -44,6 +44,19 @@ namespace oldprogrammer_authentication
 
             //HttpClients
             services.AddScoped<IEmailHttpClient, EmailHttpClient>();
+        }
+        public static void AddAllowedCors(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Default", policy =>
+                {
+                    string[] origins = builder.Configuration.GetSection("AllowedCors").Get<string[]>();
+                    policy.WithOrigins(origins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
         }
     }
 }
