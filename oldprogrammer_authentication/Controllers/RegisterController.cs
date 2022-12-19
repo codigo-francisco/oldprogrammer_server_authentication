@@ -33,7 +33,7 @@ namespace oldprogrammer_authentication.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status304NotModified);
+                    return StatusCode(StatusCodes.Status304NotModified, $"Email: {registerInput.Email} was not registered");
                 }
             }
             catch (GeneralException ex)
@@ -48,6 +48,50 @@ namespace oldprogrammer_authentication.Controllers
                 _logger.LogError(ex, "Controller: RegisterController, Method: RegisterNewUser, Exception Message: {Message}", ex.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error when it tried to create new user");
+            }
+        }
+
+        [HttpGet("resendConfirmationEmail")]
+        public async Task<IActionResult> ResendConfirmationEmail(string email)
+        {
+            try
+            {
+                await _registerService.ResendConfirmationEmail(email);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Controller: RegisterController, Method: ResendConfirmationEmail, Exception Message: {Message}", ex.Message);
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error when it tried to resend confirmation email");
+            }
+        }
+
+        [HttpGet("confirmToken")]
+        public async Task<IActionResult> ConfirmToken(string email, string token)
+        {
+            try
+            {
+                bool result = await _registerService.ConfirmToken(new ConfirmTokenInput
+                {
+                    Email = email,
+                    Token = token
+                });
+
+                if (result)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status304NotModified, $"Token for Email: {email} was not confirmed");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Controller: RegisterController, Method: ConfirmToken, Exception Message: {Message}", ex.Message);
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error when it tried to confirm token");
             }
         }
 

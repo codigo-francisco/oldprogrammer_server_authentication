@@ -16,6 +16,11 @@ namespace oldprogrammer_authetication.core.Exceptions
                 GeneralReason.Code = GeneralExceptionCode.InvalidUsername;
                 GeneralReason.MessageReason = message;
             }
+            else if (message == "UserNotFound")
+            {
+                GeneralReason.Code = GeneralExceptionCode.UserNotFound;
+                GeneralReason.MessageReason = message;
+            }
         }
         public GeneralException(string message, GeneralExceptionReason reason)
             : this(message)

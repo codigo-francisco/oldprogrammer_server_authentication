@@ -10,5 +10,7 @@ namespace oldprogrammer_authentication.services.Register
     public interface IRegisterService
     {
         Task<bool> RegisterUser(RegisterInput registerInput);
+        Task<bool> ConfirmToken(ConfirmTokenInput confirmTokenInput);
+        Task ResendConfirmationEmail(string email);
     }
 }

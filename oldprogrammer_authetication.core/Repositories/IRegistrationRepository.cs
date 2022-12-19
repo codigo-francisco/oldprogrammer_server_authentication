@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace oldprogrammer_authetication.core.Repositories
 {
-    public interface IRegisterRepository
+    public interface IRegistrationRepository
     {
         Task<bool> RegisterUser(RegisterInput registerInput);
+        Task<bool> ConfirmEmailRegistration(ConfirmTokenInput confirmTokenInput);
+        Task ResendConfirmationEmail(string email);
     }
 }

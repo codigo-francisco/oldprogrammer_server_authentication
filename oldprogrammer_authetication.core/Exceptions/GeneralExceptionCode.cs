@@ -11,5 +11,6 @@ namespace oldprogrammer_authetication.core.Exceptions
         Unknown = 0,
         EmailExists = 1,
         InvalidUsername = 2,
+        UserNotFound = 3,
     }
 }

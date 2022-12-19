@@ -35,10 +35,10 @@ namespace oldprogrammer_authentication
             //services.AddSingleton<TokenProvider>();
 
             //Services
-            services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<IRegisterService, RegistrationService>();
             
             //Repositories
-            services.AddScoped<IRegisterRepository, RegisterRepository>();
+            services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 
             //Domains
 
